@@ -229,7 +229,7 @@ def hangman(secret_word):
             num_guesses -= 1
             print('-'*8)
     if is_word_guessed(secret_word, letters_guessed):
-        return print('You won the game!')
+        return print('You won the game!  Your score is',num_guesses*len(secret_word))
     else:
         return print('Oh no! You lost... better luck next time. The secret word was',secret_word)
 

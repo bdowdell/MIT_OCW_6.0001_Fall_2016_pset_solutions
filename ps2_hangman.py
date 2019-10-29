@@ -193,29 +193,26 @@ def hangman(secret_word):
         
         # validate the user input and check for remaining warnings
         while not validate_guess(guess, letters_guessed):
-            if num_guesses == 0:
-                return print('Oh no! You lost... better luck next time. The secret word was',secret_word)
+            print('WARNING!  You have entered an invalid guess.')
+            num_warnings -= 1
+            if num_warnings > 0:
+                print('Lost a warning!')
+            elif num_warnings == 0:
+                print('You are out of warnings.  Further invalid guesses will result in loss of guess.')
             else:
-                print('WARNING!  You have entered an invalid guess.')
-                num_warnings -= 1
-                if num_warnings > 0:
-                    print('Lost a warning!')
-                elif num_warnings == 0:
-                    print('You are out of warnings.  Further invalid guesses will result in loss of guess.')
+                num_guesses -= 1
+                if num_guesses == 0:
+                    return print('Oh no! You lost... better luck next time. The secret word was',secret_word)
                 else:
-                    num_guesses -= 1
-                    if num_guesses == 0:
-                        return print('Oh no! You lost... better luck next time. The secret word was',secret_word)
-                    else:
-                        print('You are now losing guesses.')
-                print('-'*8)
-                if num_warnings >=0:
-                    print('You have',num_warnings,'warning(s) left.')
-                else:
-                    print('You have no warnings left.')
-                print('You have',num_guesses,'guess(es) left.')
-                print('Available letters:',get_available_letters(letters_guessed))
-                guess = input('Please guess a letter: ')
+                    print('You are now losing guesses.')
+            print('-'*8)
+            if num_warnings >=0:
+                print('You have',num_warnings,'warning(s) left.')
+            else:
+                print('You have no warnings left.')
+            print('You have',num_guesses,'guess(es) left.')
+            print('Available letters:',get_available_letters(letters_guessed))
+            guess = input('Please guess a letter: ')
         
         # guess is validated, append to letters_guessed as a lowercase letter
         letters_guessed.append(guess.lower())

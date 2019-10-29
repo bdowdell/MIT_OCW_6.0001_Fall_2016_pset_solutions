@@ -203,7 +203,10 @@ def hangman(secret_word):
                     print('Oops! That is not a valid guess and you are out of warnings.',
                           get_guessed_word(secret_word, letters_guessed))
             print('-'*8)
-            print('You have',num_guesses,'guess(es) left.')
+            if num_guesses > 1:
+                print('You have',num_guesses,'guesses left.')
+            else:
+                print('You have',num_guesses,'guess left.')
             print('Available letters:',get_available_letters(letters_guessed))
             guess = input('Please guess a letter: ')
         

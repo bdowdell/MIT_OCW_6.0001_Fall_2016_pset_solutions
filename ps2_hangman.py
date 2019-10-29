@@ -146,18 +146,24 @@ def hangman(secret_word):
     
     Follows the other limitations detailed in the problem write-up.
     '''
+    print()
     print('Welcome to the game Hangman!')
+    print()
     print('The rules are simple.  Guess one letter at a time.')
     print('If the letter is in the secret word, you will not lose a guess.')
     print('Guess incorrectly and you will lose a guess!')
+    print('An invalid guess (non-alpha or more than one character) will result in loss of warning.')
+    print('Lose all three warnings and you will start losing guesses.')
+    print()
     print('I am thinking of a word that is',len(secret_word),'letters long')
     print('-'*8)
    
-    # Initialize the game with 6 guesses
-    num_guesses = 6
-    
     # Initialize the game with 3 warnings
     num_warnings = 3
+    print('You have',num_warnings,'warnings left.')
+    
+    # Initialize the game with 6 guesses
+    num_guesses = 6
     
     # create an empty list to hold the guessed letters
     letters_guessed = []
@@ -166,17 +172,6 @@ def hangman(secret_word):
     # 1) secret_word is guessed, or
     # 2) the numbers of guesses runs out
     while not is_word_guessed(secret_word, letters_guessed) and num_guesses!=0:
-        
-        # Print a message that lets the user known hwo many warnings remain
-        # if num_warnings == 1, correct the output message
-        if num_warnings > 1:
-            print('You have',num_warnings,'warnings left.')
-        elif num_warnings == 1:
-            print('You have',num_warnings,'warning left.')
-        elif num_warnings == 0:
-            print('You have',num_warnings,'warnings left.')
-        else:
-            print('You have no warnings left.')
         
         # Print a message that lets the user know how many guesses remain
         # If num_guesses == 1, then correct the output message
@@ -193,23 +188,21 @@ def hangman(secret_word):
         
         # validate the user input and check for remaining warnings
         while not validate_guess(guess, letters_guessed):
-            print('WARNING!  You have entered an invalid guess.')
             num_warnings -= 1
             if num_warnings > 0:
-                print('Lost a warning!')
+                print('Oops!  That is not a valid guess.  You have',num_warnings,'warning(s) left:',
+                      get_guessed_word(secret_word, letters_guessed))
             elif num_warnings == 0:
-                print('You are out of warnings.  Further invalid guesses will result in loss of guess.')
+                print('You are out of warnings.  Further invalid guesses will result in loss of guess:',
+                      get_guessed_word(secret_word, letters_guessed))
             else:
                 num_guesses -= 1
                 if num_guesses == 0:
                     return print('Oh no! You lost... better luck next time. The secret word was',secret_word)
                 else:
-                    print('You are now losing guesses.')
+                    print('Oops! That is not a valid guess and you are out of warnings.',
+                          get_guessed_word(secret_word, letters_guessed))
             print('-'*8)
-            if num_warnings >=0:
-                print('You have',num_warnings,'warning(s) left.')
-            else:
-                print('You have no warnings left.')
             print('You have',num_guesses,'guess(es) left.')
             print('Available letters:',get_available_letters(letters_guessed))
             guess = input('Please guess a letter: ')

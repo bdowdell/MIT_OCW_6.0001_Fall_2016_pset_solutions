@@ -91,8 +91,22 @@ def get_word_score(word, n):
     n: int >= 0
     returns: int >= 0
     """
-
-    pass  # TO DO... Remove this line when you implement this function
+    # Calculate first component of word score by summing the letter values
+    sumLetters = 0
+    try:
+        for c in word.lower():
+            sumLetters += SCRABBLE_LETTER_VALUES[c]
+    except:
+        print('Letter {} not in SCRABBLE_LETTER_VALUES dictionary.'.format(c))
+        sumLetters = 0
+    # Calculate second component of word score based on length of played word
+    wordlen = len(word.lower())
+    lenScore = (7 * wordlen) - 3*(n - wordlen)
+    if lenScore > 1:
+        score = sumLetters * lenScore
+    else:
+        score = sumLetters * 1
+    return score
 
 #
 # Make sure you understand how this function works and what it does!

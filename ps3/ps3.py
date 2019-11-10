@@ -213,7 +213,7 @@ def is_valid_word(word, hand, word_list):
     else:
         return False # it doesn't matter whether the word can be built from the hand
 
-    # Test whether word is entired composed of letters in hand
+    # Test whether word is entirely composed of letters in hand
     word_dict = get_frequency_dict(word.lower())
     for key in word_dict.keys():
         if hand.get(key,0) >= word_dict[key]:

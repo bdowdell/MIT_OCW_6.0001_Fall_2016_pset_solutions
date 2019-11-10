@@ -19,6 +19,9 @@ SCRABBLE_LETTER_VALUES = {
     'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
 }
 
+# Add the wildcard '*' to the SCRABBLE_LETTER_VALUES with score of 0
+SCRABBLE_LETTER_VALUES['*'] = 0
+
 # -----------------------------------
 # Helper code
 # (you don't need to understand this helper code)
@@ -150,9 +153,12 @@ def deal_hand(n):
     hand={}
     num_vowels = int(math.ceil(n / 3))
 
-    for i in range(num_vowels):
+    for i in range(num_vowels-1):
         x = random.choice(VOWELS)
         hand[x] = hand.get(x, 0) + 1
+
+    # add a wildcard to the hand in place of a vowel
+    hand['*'] = hand.get('*', 0) +1
 
     for i in range(num_vowels, n):
         x = random.choice(CONSONANTS)
@@ -207,8 +213,21 @@ def is_valid_word(word, hand, word_list):
     word_list: list of lowercase strings
     returns: boolean
     """
-    # Test first whether word is in word_list
-    if word.lower() in word_list:
+    # Test first whether word is in word_list, with wildcard '*' handling
+    if '*' in word.lower():
+        possible_words = []
+        for c in VOWELS:
+            possible_words.append(word.lower()[:word.index('*')] +
+                                       c + word.lower()[word.index('*')+1:])
+        num_valid = 0
+        for item in possible_words:
+            if item in word_list:
+                num_valid += 1
+        if num_valid >= 1:
+            in_word_list = True
+        else:
+            return False
+    elif word.lower() in word_list:
         in_word_list = True
     else:
         return False # it doesn't matter whether the word can be built from the hand

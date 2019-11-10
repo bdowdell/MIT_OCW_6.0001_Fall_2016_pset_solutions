@@ -207,8 +207,25 @@ def is_valid_word(word, hand, word_list):
     word_list: list of lowercase strings
     returns: boolean
     """
+    # Test first whether word is in word_list
+    if word.lower() in word_list:
+        in_word_list = True
+    else:
+        return False # it doesn't matter whether the word can be built from the hand
 
-    pass  # TO DO... Remove this line when you implement this function
+    # Test whether word is entired composed of letters in hand
+    word_dict = get_frequency_dict(word.lower())
+    for key in word_dict.keys():
+        if hand.get(key,0) >= word_dict[key]:
+            in_hand = True
+        else:
+            return False
+
+    # Test whether both conditions are satisfied
+    if in_word_list and in_hand:
+        return True
+    else:
+        return False
 
 #
 # Problem #5: Playing a hand

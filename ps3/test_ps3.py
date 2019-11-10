@@ -256,8 +256,18 @@ def test_wildcard(word_list):
 
         failure = True
 
+    # test 5 Mixed Case input
+    hand = {'y': 1, 'o':1, '*':1, 't':1, 'h':1, 'n':2}
+    word = 'Yo*Th'
+
+    if not is_valid_word(word, hand, word_list):
+        print("FAILURE: test_is_valid_word() with wildcards")
+        print("\tExpected True, but got False for word: '" + word +"' and hand:", hand)
+
+        failure = True
+
     # dictionary of words and scores WITH wildcards
-    words = {("h*ney", 7):290, ("c*ws", 6):176, ("wa*ls", 7):203}
+    words = {("h*ney", 7):290, ("c*ws", 6):176, ("wa*ls", 7):203, ("Yo*Th", 7):290}
     for (word, n) in words.keys():
         score = get_word_score(word, n)
         if score != words[(word, n)]:

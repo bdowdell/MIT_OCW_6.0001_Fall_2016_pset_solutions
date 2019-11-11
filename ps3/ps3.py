@@ -323,8 +323,10 @@ def play_hand(hand, word_list):
                 print('That is not a valid word.  Please choose another word.')
             # update the user's hand by removing the letters of their inputted word
             hand = update_hand(hand, player_word)
+            print() # separator line
     # Game is over (user entered '!!' or ran out of letters),
     # so tell user the total score
+    print() # add an empty line
     if calculate_handlen(hand) == 0:
         print('Ran out of letters.  Total score: {} points'.format(
                 total_score))

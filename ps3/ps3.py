@@ -369,8 +369,25 @@ def substitute_hand(hand, letter):
     letter: string
     returns: dictionary (string -> int)
     """
+    # Start by defining the pool of letters from which to randomly select
+    # Remove all letters in hand so that regardless of user choice,
+    # none of the origional hand letters can be re-selected
+    full_list = list(VOWELS + CONSONANTS)
+    keys = hand.keys()
+    swap_list = [c for c in full_list if c not in keys]
+    swap_str = ''.join(swap_list)
 
-    pass  # TO DO... Remove this line when you implement this function
+    # randomly select the new letter from the filtered pool of letters
+    x = random.choice(swap_str)
+
+    # copy hand
+    subbed_hand = hand.copy()
+
+    # replace the user selected letter in hand with the random selection
+    subbed_hand[x] = subbed_hand[letter]
+    del(subbed_hand[letter])
+
+    return subbed_hand
 
 
 def play_game(word_list):

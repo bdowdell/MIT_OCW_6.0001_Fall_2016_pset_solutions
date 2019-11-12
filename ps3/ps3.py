@@ -328,11 +328,13 @@ def play_hand(hand, word_list):
     # so tell user the total score
     print() # add an empty line
     if calculate_handlen(hand) == 0:
-        print('Ran out of letters.  Total score: {} points'.format(
+        print('Ran out of letters.  Total score for hand: {} points'.format(
                 total_score))
+        print('-'*60)
     else: # user must have entered '!!'
-        print('Game terminated by user.  Total score: {} points'.format(
+        print('Game terminated by user.  Total score for hand: {} points'.format(
                 total_score))
+        print('-'*60)
     # Return the total score as result of function
     return total_score
 
@@ -421,8 +423,123 @@ def play_game(word_list):
     word_list: list of lowercase strings
     """
 
-    print("play_game not implemented.") # TO DO... Remove this line when you implement this function
+    # initialize game_score to track score across hands
+    game_score = 0
 
+    # Only one substitution per game can be made
+    subs_remaining = 1
+
+    # Only one hand per game may be replayed
+    replays_remaining = 1
+
+    def _get_num_hands():
+        """Ask the user to input the number of hands to play
+        returns a string"""
+        return input('Enter total number of hands: ')
+
+    def _verify_num_hands(num_hands):
+        """Verify whether num_hands is a valid value
+        Returns bool"""
+        try:
+            if len(num_hands) == 1 and type(int(num_hands)) == int:
+                return True
+            else:
+                raise ValueError
+        except:
+            return False
+
+    def _ask_for_substitution():
+        """Ask the user if they want to substitute a letter
+        Returns a string"""
+        return input('Would you like to substitute a letter (yes/no)? ')
+
+    def _verify_substitution_input(subs_choice):
+        """Verify whether subs_choice is a valid value
+        Returns bool"""
+        try:
+            if subs_choice.lower() == 'yes' or subs_choice.lower() == 'no':
+                return True
+            else:
+                raise ValueError
+        except:
+            return False
+
+    def _get_sub_letter():
+        """Ask the user what letter to substitute
+        Returns a string"""
+        return input('Which letter would you like to replace? ')
+
+    def _verify_sub_letter(sub_letter):
+        """Validate that input letter is alpha and single
+        Returns a bool"""
+        try:
+            if sub_letter.lower().isalpha() and len(sub_letter.lower()) == 1:
+                return True
+            else:
+                raise ValueError
+        except:
+            return False
+
+    def _check_subs_remaining(subs_left):
+        """Assumes subs_left is an integer
+        Returns a bool"""
+        if subs_left == 1:
+            return True
+        else:
+            return False
+
+    def _check_replays_remaining(replays_left):
+        """Assumes replays_left is an integer
+        Returns a bool"""
+        if replays_left == 1:
+            return True
+        else:
+            return False
+
+    # Get the number of hands to play from the user & verify the input
+    num_hands = _get_num_hands()
+    print()
+    while True:
+        if _verify_num_hands(num_hands):
+            num_hands = int(num_hands)
+            break
+        else:
+            print('Invalid entry for number of hands.')
+            num_hands = _get_num_hands()
+
+    # Continue play until all hands dealt
+    while num_hands > 0:
+        # Deal the initial hand
+        hand = deal_hand(HAND_SIZE)
+        # Ask whether the player wants to substitute a letter
+        if _check_subs_remaining(subs_remaining):
+            # Display the initial hand
+            print('Current hand: ', end=' '), display_hand(hand)
+            subs_choice = _ask_for_substitution()
+            while True:
+                if _verify_substitution_input(subs_choice):
+                    if subs_choice.lower() == 'yes':
+                        sub_letter = _get_sub_letter()
+                        while True:
+                            if _verify_sub_letter(sub_letter):
+                                hand = substitute_hand(hand, sub_letter.lower())
+                                subs_remaining = 0
+                                break
+                            else:
+                                print('Invalid entry for subbed letter.')
+                                sub_letter = _get_sub_letter()
+                        break # _verify_substitution_input loop
+                    elif subs_choice.lower() == 'no':
+                        break
+                else:
+                    print('Invalid entry for substitution.  Should be yes or no')
+                    subs_choice = _ask_for_substitution()
+        print() # blank line
+        # play hand until no letters left or user terminates
+        hand_score = play_hand(hand, word_list)
+        game_score += hand_score
+        num_hands -= 1
+    return print('Game over!  Final score: {} points'.format(game_score))
 
 
 #

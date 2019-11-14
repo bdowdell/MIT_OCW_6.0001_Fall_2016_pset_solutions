@@ -496,6 +496,23 @@ def play_game(word_list):
         else:
             return False
 
+    def _ask_for_replay():
+        """Asks the user whether to replay the hand
+        This can happen only once per game
+        Returns a string"""
+        return input('Would you like to replay the hand (yes/no?)' )
+
+    def _verify_replay_input(replay_choice):
+        """Assumes a string
+        Returns a bool"""
+        try:
+            if replay_choice.lower() == 'yes' or replay_choice.lower() == 'no':
+                return True
+            else:
+                raise ValueError
+        except:
+            return False
+
     # Get the number of hands to play from the user & verify the input
     num_hands = _get_num_hands()
     print()
@@ -534,9 +551,29 @@ def play_game(word_list):
                 else:
                     print('Invalid entry for substitution.  Should be yes or no')
                     subs_choice = _ask_for_substitution()
+
         print() # blank line
         # play hand until no letters left or user terminates
         hand_score = play_hand(hand, word_list)
+
+        # Ask the player whether they want to replay the last hand
+        if _check_replays_remaining(replays_remaining):
+            replay_choice = _ask_for_replay()
+            while True:
+                if _verify_replay_input(replay_choice):
+                    if replay_choice.lower() == 'yes':
+                        temp_score = hand_score
+                        hand_score = play_hand(hand, word_list)
+                        if temp_score < hand_score:
+                            temp_score, hand_score = hand_score, temp_score
+                        replays_remaining = 0
+                        break
+                    else:
+                        break
+                else:
+                    print('Invalid entry for replay.  Should be yes or no')
+                    replay_choice = _ask_for_replay()
+
         game_score += hand_score
         num_hands -= 1
     return print('Game over!  Final score: {} points'.format(game_score))

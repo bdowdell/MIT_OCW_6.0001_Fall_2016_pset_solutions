@@ -392,6 +392,90 @@ def substitute_hand(hand, letter):
     return subbed_hand
 
 
+# Additional helper code for play_game function
+
+def _get_num_hands():
+    """Ask the user to input the number of hands to play
+    returns a string"""
+    return input('Enter total number of hands: ')
+
+def _verify_num_hands(num_hands):
+    """Verify whether num_hands is a valid value
+    Returns bool"""
+    try:
+        if len(num_hands) == 1 and type(int(num_hands)) == int:
+            return True
+        else:
+            raise ValueError
+    except:
+        return False
+
+def _ask_for_substitution():
+    """Ask the user if they want to substitute a letter
+    Returns a string"""
+    return input('Would you like to substitute a letter (yes/no)? ')
+
+def _verify_substitution_input(subs_choice):
+    """Verify whether subs_choice is a valid value
+    Returns bool"""
+    try:
+        if subs_choice.lower() == 'yes' or subs_choice.lower() == 'no':
+            return True
+        else:
+            raise ValueError
+    except:
+        return False
+
+def _get_sub_letter():
+    """Ask the user what letter to substitute
+    Returns a string"""
+    return input('Which letter would you like to replace? ')
+
+def _verify_sub_letter(sub_letter):
+    """Validate that input letter is alpha and single
+    Returns a bool"""
+    try:
+        if sub_letter.lower().isalpha() and len(sub_letter.lower()) == 1:
+            return True
+        else:
+            raise ValueError
+    except:
+        return False
+
+def _check_subs_remaining(subs_left):
+    """Assumes subs_left is an integer
+    Returns a bool"""
+    if subs_left == 1:
+        return True
+    else:
+        return False
+
+def _check_replays_remaining(replays_left):
+    """Assumes replays_left is an integer
+    Returns a bool"""
+    if replays_left == 1:
+        return True
+    else:
+        return False
+
+def _ask_for_replay():
+    """Asks the user whether to replay the hand
+    This can happen only once per game
+    Returns a string"""
+    return input('Would you like to replay the hand (yes/no?)' )
+
+def _verify_replay_input(replay_choice):
+    """Assumes a string
+    Returns a bool"""
+    try:
+        if replay_choice.lower() == 'yes' or replay_choice.lower() == 'no':
+            return True
+        else:
+            raise ValueError
+    except:
+        return False
+
+
 def play_game(word_list):
     """
     Allow the user to play a series of hands
@@ -431,87 +515,6 @@ def play_game(word_list):
 
     # Only one hand per game may be replayed
     replays_remaining = 1
-
-    def _get_num_hands():
-        """Ask the user to input the number of hands to play
-        returns a string"""
-        return input('Enter total number of hands: ')
-
-    def _verify_num_hands(num_hands):
-        """Verify whether num_hands is a valid value
-        Returns bool"""
-        try:
-            if len(num_hands) == 1 and type(int(num_hands)) == int:
-                return True
-            else:
-                raise ValueError
-        except:
-            return False
-
-    def _ask_for_substitution():
-        """Ask the user if they want to substitute a letter
-        Returns a string"""
-        return input('Would you like to substitute a letter (yes/no)? ')
-
-    def _verify_substitution_input(subs_choice):
-        """Verify whether subs_choice is a valid value
-        Returns bool"""
-        try:
-            if subs_choice.lower() == 'yes' or subs_choice.lower() == 'no':
-                return True
-            else:
-                raise ValueError
-        except:
-            return False
-
-    def _get_sub_letter():
-        """Ask the user what letter to substitute
-        Returns a string"""
-        return input('Which letter would you like to replace? ')
-
-    def _verify_sub_letter(sub_letter):
-        """Validate that input letter is alpha and single
-        Returns a bool"""
-        try:
-            if sub_letter.lower().isalpha() and len(sub_letter.lower()) == 1:
-                return True
-            else:
-                raise ValueError
-        except:
-            return False
-
-    def _check_subs_remaining(subs_left):
-        """Assumes subs_left is an integer
-        Returns a bool"""
-        if subs_left == 1:
-            return True
-        else:
-            return False
-
-    def _check_replays_remaining(replays_left):
-        """Assumes replays_left is an integer
-        Returns a bool"""
-        if replays_left == 1:
-            return True
-        else:
-            return False
-
-    def _ask_for_replay():
-        """Asks the user whether to replay the hand
-        This can happen only once per game
-        Returns a string"""
-        return input('Would you like to replay the hand (yes/no?)' )
-
-    def _verify_replay_input(replay_choice):
-        """Assumes a string
-        Returns a bool"""
-        try:
-            if replay_choice.lower() == 'yes' or replay_choice.lower() == 'no':
-                return True
-            else:
-                raise ValueError
-        except:
-            return False
 
     # Get the number of hands to play from the user & verify the input
     num_hands = _get_num_hands()

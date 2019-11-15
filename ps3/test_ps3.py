@@ -279,6 +279,99 @@ def test_wildcard(word_list):
     if not failure:
         print("SUCCESS: test_wildcard()")
 
+def test__verify_num_hands():
+    """
+    unit test for _verify_num_hands
+    """
+    failure = False
+    num_hands = {'3':True, '33':False, '7':True, 'a':False, 'aa':False, 'three':False}
+
+    for key in num_hands.keys():
+        if not (_verify_num_hands(key) == num_hands[key]):
+            print("FAILURE: test__verify_num_hands()")
+            print("\tExpected", num_hands[key],"but got ", not num_hands[key])
+            failure = True
+
+    if not failure:
+        print("SUCCESS: test__verify_num_hands()")
+
+
+def test__verify_substitution_input():
+    """
+    unit test for _verify_substitution_input
+    """
+    failure = False
+    subs_choice = {'yes':True, 'no':True, 'YES':True, 'NO':True, 'yesa':False,
+                   'nosa':False, 'HAppY':False, '7':False, '1':False}
+
+    for key in subs_choice.keys():
+        if not (_verify_substitution_input(key) == subs_choice[key]):
+            print("FAILURE: test__verify_substitution_input")
+            print("\tExpected", subs_choice[key],"but got ", not subs_choice[key])
+            failure = True
+
+    if not failure:
+        print("SUCCESS: test__verify_substitution_input()")
+
+
+def test__verify_sub_letter():
+    """unit test for _verify_sub_letter(sub_letter)"""
+    failure = False
+    sub_letter = {'c':True, 'x':True, 'a':True, 'E':True, 'as':False, 'AV':False,
+                  '23':False, '!@':False, '':False, ' ':False}
+
+    for key in sub_letter.keys():
+        if not (_verify_sub_letter(key) == sub_letter[key]):
+            print("FAILURE: test__verify_sub_letter")
+            print("\tExpected", sub_letter[key],"but got ", not sub_letter[key])
+            failure = True
+
+    if not failure:
+        print("SUCCESS: test__verify_sub_letter()")
+
+def test__check_subs_remaining():
+    """unit test for _check_subs_remaining"""
+    failure = False
+    subs_left = {'1':True, '0':False, '2':False,}
+
+    for key in subs_left.keys():
+        if not (_check_subs_remaining(int(key)) == subs_left[key]):
+            print("FAILURE: test__check_subs_remaining")
+            print("\tExpected", subs_left[key],"but got ", not subs_left[key])
+            failure = True
+
+    if not failure:
+        print("SUCCESS: test__check_subs_remaining()")
+
+
+def test__check_replays_remaining():
+    """unit test for _check_replays_remaining"""
+    failure = False
+    replays_left = {'1':True, '0':False, '2':False,}
+
+    for key in replays_left.keys():
+        if not (_check_replays_remaining(int(key)) == replays_left[key]):
+            print("FAILURE: test__check_replays_remaining")
+            print("\tExpected", replays_left[key],"but got ", not replays_left[key])
+            failure = True
+
+    if not failure:
+        print("SUCCESS: test__check_replays_remaining()")
+
+def test__verify_replay_input():
+    """unit test for _verify_replay_input(replay_choice)"""
+    failure = False
+    replay_choice = {'yes':True, 'no':True, 'YES':True, 'NO':True, 'yesa':False,
+                   'nosa':False, 'HAppY':False, '7':False, '1':False}
+
+    for key in replay_choice.keys():
+        if not (_verify_replay_input(key) == replay_choice[key]):
+            print("FAILURE: test__verify_replay_input")
+            print("\tExpected", replay_choice[key],"but got ", not replay_choice[key])
+            failure = True
+
+    if not failure:
+        print("SUCCESS: test__verify_replay_input()")
 
 word_list = load_words()
 print("----------------------------------------------------------------------")
@@ -293,4 +386,23 @@ test_is_valid_word(word_list)
 print("----------------------------------------------------------------------")
 print("Testing wildcards...")
 test_wildcard(word_list)
+print("----------------------------------------------------------------------")
+print("Testing _verify_num_hands ...")
+test__verify_num_hands()
+print("----------------------------------------------------------------------")
+print("Testing _verify_substitution_input ...")
+test__verify_substitution_input()
+print("----------------------------------------------------------------------")
+print("Testing _verify_sub_letter ...")
+test__verify_sub_letter()
+print("----------------------------------------------------------------------")
+print("Testing _check_subs_remaining ...")
+test__check_subs_remaining()
+print("----------------------------------------------------------------------")
+print("Testing _check_replays_remaining ...")
+test__check_replays_remaining()
+print("----------------------------------------------------------------------")
+print("Testing _verify_replay_input ...")
+test__verify_replay_input()
+print("----------------------------------------------------------------------")
 print("All done!")

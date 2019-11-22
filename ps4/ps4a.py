@@ -23,21 +23,21 @@ def get_permutations(sequence):
     a different order than what is listed here.
     '''
 
-# =============================================================================
-#   I needed some help on this one.
-#
-#   I found a good resource here:
-#   https://medium.com/@aberg2014/recursively-generating-string-permutations-381b4ad9588
-#
-#   The example in this explanation is written in JavaScript
-#   I translatd the solution to Python!
-# =============================================================================
+    # =============================================================================
+    #   I needed some help on this one.
+    #
+    #   I found a good resource here:
+    #   https://medium.com/@aberg2014/recursively-generating-string-permutations-381b4ad9588
+    #
+    #   The example in this explanation is written in JavaScript
+    #   I translatd the solution to Python!
+    # =============================================================================
 
     # Base Case: sequence has one character to return
     if len(sequence) == 1:
         return sequence
 
-    # inirialize empty list to hold permutations
+    # initialize empty list to hold permutations
     perm_list = list()
 
     # Loop over each letter in sequence

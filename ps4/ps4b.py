@@ -1,5 +1,5 @@
 # Problem Set 4B
-# Name: <your name here>
+# Name: Ben Dowdell
 # Collaborators:
 # Time Spent: x:xx
 
@@ -104,7 +104,32 @@ class Message(object):
         Returns: a dictionary mapping a letter (string) to
                  another letter (string).
         '''
-        pass #delete this line and replace with your code here
+        self.shift_dict = dict()
+        for i in range(0, len(string.ascii_lowercase)):
+            key = string.ascii_lowercase[i]
+            if i + shift < len(string.ascii_lowercase):
+                self.shift_dict[key] = self.shift_dict.get(
+                        key,
+                        string.ascii_lowercase[i + shift])
+            else:
+                self.shift_dict[key] = self.shift_dict.get(
+                        key,
+                        string.ascii_lowercase[i + shift
+                                               - len(string.ascii_lowercase)])
+
+        for i in range(0, len(string.ascii_uppercase)):
+            key = string.ascii_uppercase[i]
+            if i + shift < len(string.ascii_uppercase):
+                self.shift_dict[key] = self.shift_dict.get(
+                        key,
+                        string.ascii_uppercase[i + shift])
+            else:
+                self.shift_dict[key] = self.shift_dict.get(
+                        key,
+                        string.ascii_uppercase[i + shift
+                                               - len(string.ascii_uppercase)])
+
+        return self.shift_dict
 
     def apply_shift(self, shift):
         '''

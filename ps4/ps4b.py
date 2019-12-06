@@ -260,13 +260,23 @@ class CiphertextMessage(Message):
                     self.get_valid_words(), word)])
 
         # collect line indexes with len > 0
+        # returns a list of tuples containing index & number of valid words
         valid_index = list()
         for line in valid_line:
             if len(line) > 0:
-                valid_index.append(valid_line.index(line))
+                valid_index.append((valid_line.index(line), len(line)))
+
+        # search the valid_index for the index (shift) that results
+        # in the highest number of valid decrypted words
+        most_matched_words = valid_index[0][1]
+        best_shift = valid_index[0][0]
+        for t in valid_index:
+            if t[1] > most_matched_words:
+                most_matched_words = t[1]
+                best_shift = t[0]
 
         # Take the maximum value of valid_index as the best shift
-        self.best_shift_value = max(valid_index)
+        self.best_shift_value = best_shift
 
         return self.best_shift_value, self.apply_shift(self.best_shift_value)
 
@@ -301,6 +311,12 @@ if __name__ == '__main__':
     print('Actual Output:', ciphertext_test2.decrypt_message())
 
     #TODO: best shift value and unencrypted story
+
+    # Test with provided encrypted string
+    print('\n Test using an unknown encrypted string\n')
+    encrypted_msg = CiphertextMessage(get_story_string())
+    print('\nEncrypted message:', encrypted_msg.get_message_text())
+    print('\nDecrypted message:', encrypted_msg.decrypt_message())
 
 
     pass #delete this line and replace with your code here

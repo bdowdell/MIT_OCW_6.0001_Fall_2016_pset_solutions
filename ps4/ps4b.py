@@ -229,7 +229,8 @@ class CiphertextMessage(Message):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
+        # Call the superclass constructor to initialize inherited attributes
+        Message.__init__(self, text)
 
     def decrypt_message(self):
         '''
@@ -247,7 +248,27 @@ class CiphertextMessage(Message):
         Returns: a tuple of the best shift value used to decrypt the message
         and the decrypted message text using that shift value
         '''
-        pass #delete this line and replace with your code here
+        # collect all possible cipher shifts
+        decrypt_list = list()
+        for i in range(0, len(string.ascii_lowercase)):
+            decrypt_list.append(self.apply_shift(i))
+
+        # test each decrypted line for valid English words
+        valid_line = list()
+        for line in decrypt_list:
+            valid_line.append([word for word in line.split() if is_word(
+                    self.get_valid_words(), word)])
+
+        # collect line indexes with len > 0
+        valid_index = list()
+        for line in valid_line:
+            if len(line) > 0:
+                valid_index.append(valid_line.index(line))
+
+        # Take the maximum value of valid_index as the best shift
+        self.best_shift_value = max(valid_index)
+
+        return self.best_shift_value, self.apply_shift(self.best_shift_value)
 
 if __name__ == '__main__':
 
@@ -264,5 +285,6 @@ if __name__ == '__main__':
     #TODO: WRITE YOUR TEST CASES HERE
 
     #TODO: best shift value and unencrypted story
+
 
     pass #delete this line and replace with your code here

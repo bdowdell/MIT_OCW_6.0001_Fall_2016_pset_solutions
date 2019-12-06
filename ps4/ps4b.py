@@ -272,17 +272,33 @@ class CiphertextMessage(Message):
 
 if __name__ == '__main__':
 
-#    #Example test case (PlaintextMessage)
-#    plaintext = PlaintextMessage('hello', 2)
-#    print('Expected Output: jgnnq')
-#    print('Actual Output:', plaintext.get_message_text_encrypted())
-#
-#    #Example test case (CiphertextMessage)
-#    ciphertext = CiphertextMessage('jgnnq')
-#    print('Expected Output:', (24, 'hello'))
-#    print('Actual Output:', ciphertext.decrypt_message())
+    # Test Case 1 (PlaintextMessage)
+    print('\nTest Case 1: PlaintextMessage\n')
+    plaintext_test1 = PlaintextMessage('hello', 3)
+    print('Input:', ('hello', 3))
+    print('Expected Output: khoor')
+    print('Actual Output:', plaintext_test1.get_message_text_encrypted())
 
-    #TODO: WRITE YOUR TEST CASES HERE
+    # Test Case 2 (PlaintextMessage)
+    print('\nTest Case 2: PlaintextMessage\n')
+    plaintext_test2 = PlaintextMessage('HeLlo, WOrld!', 3)
+    print('Input:', ('HeLlo, WOrld!', 3))
+    print('Expected Output: KhOor, ZRuog!')
+    print('Actual Output: ', plaintext_test2.get_message_text_encrypted())
+
+    # Test Case 1 (CiphertextMessage)
+    print('\nTest Case 1: CiphertextMessage\n')
+    ciphertext_test1 = CiphertextMessage('khoor')
+    print('Input: khoor')
+    print('Expected Output:', (23, 'hello'))
+    print('Actual Output:', ciphertext_test1.decrypt_message())
+
+    # Test Case 2 (CiphertextMessage)
+    print('\nTest Case 2: CiphertextMessage\n')
+    ciphertext_test2 = CiphertextMessage('KhOor, ZRuog!')
+    print('Input: KhOor, ZRuog!')
+    print('Expected Output:', (23, 'HeLlo, WOrld!'))
+    print('Actual Output:', ciphertext_test2.decrypt_message())
 
     #TODO: best shift value and unencrypted story
 

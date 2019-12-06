@@ -310,8 +310,6 @@ if __name__ == '__main__':
     print('Expected Output:', (23, 'HeLlo, WOrld!'))
     print('Actual Output:', ciphertext_test2.decrypt_message())
 
-    #TODO: best shift value and unencrypted story
-
     # Test with provided encrypted string
     print('\n Test using an unknown encrypted string\n')
     encrypted_msg = CiphertextMessage(get_story_string())
